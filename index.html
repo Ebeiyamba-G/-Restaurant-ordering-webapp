@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chopsity Restaurant Ordering</title>
+  
+  <style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #ffffff, #ff0022,  #ffffff); 
+  min-height: 100vh;
+}
+    header {
+      background: linear-gradient(135deg, black, white, rgb(255, 255, 255), white, rgb(255, 0, 0));
+      color: rgb(0, 0, 0);
+      padding: 15px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    nav {
+      background: linear-gradient(135deg, #ffffff, #ff0022,  #000000);
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 10px;
+    }
+    nav a {
+      color: rgb(255, 255, 255);
+      font-weight: bold;
+      text-decoration: none;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    .menu-section {
+      margin: 30px auto;
+      width: 90%;
+      max-width: 1000px;
+    }
+    .menu-section h2 {
+      color: rgb(0, 0, 0);
+      border-bottom: 2px solid black;
+      padding-bottom: 5px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .food-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+    .food-item {
+      background: linear-gradient(135deg, #000000, red, #ff0022,  #000000);
+      border-radius: 10px;
+      padding: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+    .food-item img {
+      width: 100%;
+      height: 150px;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+    .food-item p {
+      margin: 5px 0;
+      font-weight: bold;
+      color: black;
+    }
+    .price {
+      color: green;
+      font-weight: bold;
+    }
+    .food-item input {
+      background: linear-gradient(135deg, #000000, #ffffff, red,  #000000);
+      width: 60px;
+      padding: 5px;
+      margin: 5px 0;
+      text-align: center;
+    }
+    .food-item button {
+      background: red;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .food-item button:hover {
+      background: darkred;
+    }
+    #cart {
+      background: linear-gradient(135deg, #ffffff, #ff0022,  #000000);
+      color:red;
+      margin: 40px auto;
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 800px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+    #cart h2 {
+      color: red;
+      margin-bottom: 10px;
+    }
+    #cart ul {
+      list-style: none;
+      padding: 0;
+    }
+    #cart li {
+      padding: 8px;
+      border-bottom: 1px solid #ccc;
+    }
+    #checkout {
+      margin-top: 20px;
+    }
+    #checkout input, #checkout button, #checkout select {
+      display: block;
+      margin: 10px auto;
+      padding: 10px;
+      width: 80%;
+      max-width: 400px;
+    }
+    #checkout button {
+      background: red;
+      color: white;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    #checkout button:hover {
+      background: darkred;
+    }
+    #contact {
+      background: linear-gradient(135deg, black, #000000, #ff0022,  #000000);
+      color: white;
+      padding: 30px;
+      text-align: center;
+    }
+    #contact h2 {
+      margin-bottom: 10px;
+    }
+    #contact p {
+      margin: 5px 0;
+    }
+    #contact a {
+      color: yellow;
+      font-weight: bold;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+  <img src="file:///C:/xampp/htdocs/dashboard/Chopsity%20Restaurant%20Ordering%20App/chopsity.jfif" alt="Chopsity Restaurant Ordering app">
+  <h1>Restaurant</h1>
+</header>
+
+  <nav>
+    <a href="#menu">Menu</a>
+    <a href="#cart">Cart</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <!-- Menu Section -->
+  <div id="menu">
+    <div class="menu-section">
+      <h2>Rice & Pasta</h2>
+      <div class="food-grid">
+        <div class="food-item">
+          <img src="file:///C:/xampp/htdocs/dashboard/Chopsity%20Restaurant%20Ordering%20App/Jollof.jfif" alt="Jollof Rice">
+          <p>Jollof Rice</p>
+          <p class="price">₦500</p>
+          Portion: <input type="number" min="1" value="1" id="jollofQty">
+          <button onclick="addToCart('Jollof Rice', 500, document.getElementById('jollofQty').value)">Add</button>
+        </div>
+        <div class="food-item">
+          <img src="file:///C:/xampp/htdocs/dashboard/Chopsity%20Restaurant%20Ordering%20App/fried%20rice.jfif" alt="Fried Rice">
+          <p>Fried Rice</p>
+          <p class="price">₦500</p>
+          Portion: <input type="number" min="1" value="1" id="friedQty">
+          <button onclick="addToCart('Fried Rice', 500, document.getElementById('friedQty').value)">Add</button>
+        </div>
+        <div class="food-item">
+          <img src="file:///C:/xampp/htdocs/dashboard/Chopsity%20Restaurant%20Ordering%20App/spaghetti.jfif" alt="Spaghetti">
+          <p>Spaghetti</p>
+          <p class="price">₦1000</p>
+          Portion: <input type="number" min="1" value="1" id="spagQty">
+          <button onclick="addToCart('Spaghetti', 1000, document.getElementById('spagQty').value)">Add</button>
+        </div>
+        <div class="food-item">
+          <img src="file:///C:/xampp/htdocs/dashboard/Chopsity%20Restaurant%20Ordering%20App/yam%20n%20egg.jfif" alt="Yam & Egg Sauce">
+          <p>Yam & Egg Sauce</p>
+          <p class="price">₦2000</p>
+          Portion: <input type="number" min="1" value="1" id="yamQty">
+          <button onclick="addToCart('Yam & Egg Sauce', 2000, document.getElementById('yamQty').value)">Add</button>
+        </div>
+        <div class="food-item">
+          <img src="file:///C:/xampp/htdocs/dashboard/Chopsity%20Restaurant%20Ordering%20App/chicken%20n%20chips.jfif" alt="Chicken and chips">
+          <p>Chicken and chips</p>
+          <p class="price">₦2500</p>
+          Portion: <input type="number" min="1" value="1" id="cncQty">
+          <button onclick="addToCart('Chicken and chips', 2500, document.getElementById('cncQty').value)">Add</button>
+        </div>
+      </div>
+    </div>
+    <div class="menu-section">
+      <h2>Protein</h2>
+      <div class="food-grid">
+        <div class="food-item">
+          <img src="file:///C:/xampp/htdocs/dashboard/Chopsity%20Restaurant%20Ordering%20App/chicken.jfif" alt="Chicken">
+          <p>Chicken</p>
+          <p class="price">₦1500</p>
+          Portion: <input type="number" min="1" value="1" id="chickenQty">
+          <button onclick="addToCart('Chicken', 1500, document.getElementById('chickenQty').value)">Add</button>
+        </div>
+        <div class="food-item">
+          <img src="file:///C:/xampp/htdocs/dashboard/Chopsity%20Restaurant%20Ordering%20App/beef.jfif" alt="Beef">
+          <p>Beef</p>
+          <p class="price">₦300</p>
+          Portion: <input type="number" min="1" value="1" id="beefQty">
+          <button onclick="addToCart('Beef', 300, document.getElementById('beefQty').value)">Add</button>
+        </div>
+        <div class="food-item">
+          <img src="file:///C:/xampp/htdocs/dashboard/Chopsity%20Restaurant%20Ordering%20App/plantain.jfif" alt="Plantain">
+          <p>Plantain</p>
+          <p class="price">₦500</p>
+          Portion: <input type="number" min="1" value="1" id="planQty">
+          <button onclick="addToCart('Plantain', 500, document.getElementById('planQty').value)">Add</button>
+        </div>
+      </div>
+    </div>
+    <div class="menu-section">
+      <h2>Drinks</h2>
+      <div class="food-grid">
+        <div class="food-item">
+          <img src="file:///C:/xampp/htdocs/dashboard/Chopsity%20Restaurant%20Ordering%20App/water.jfif" alt="Water">
+          <p>Water</p>
+          <p class="price">₦250</p>
+          Portion: <input type="number" min="1" value="1" id="waterQty">
+          <button onclick="addToCart('Water', 250, document.getElementById('waterQty').value)">Add</button>
+        </div>
+        <div class="food-item">
+          <img src="file:///C:/xampp/htdocs/dashboard/Chopsity%20Restaurant%20Ordering%20App/coca.jfif" alt="Coca-Cola">
+          <p>Coca-Cola</p>
+          <p class="price">₦500</p>
+          Portion: <input type="number" min="1" value="1" id="CokeQty">
+          <button onclick="addToCart('Coca-Cola', 500, document.getElementById('CokeQty').value)">Add</button>
+        </div>
+        <div class="food-item">
+          <img src="file:///C:/xampp/htdocs/dashboard/Chopsity%20Restaurant%20Ordering%20App/fanta.jfif" alt="Fanta">
+          <p>Fanta</p>
+          <p class="price">₦500</p>
+          Portion: <input type="number" min="1" value="1" id="fanQty">
+          <button onclick="addToCart('Fanta', 500, document.getElementById('fanQty').value)">Add</button>
+        </div>
+        <div class="food-item">
+          <img src="file:///C:/xampp/htdocs/dashboard/Chopsity%20Restaurant%20Ordering%20App/sprite.jfif" alt="Sprite">
+          <p>Sprite</p>
+          <p class="price">₦500</p>
+          Portion: <input type="number" min="1" value="1" id="spriQty">
+          <button onclick="addToCart('Sprite', 500, document.getElementById('spriQty').value)">Add</button>
+        </div><div class="food-item">
+          <img src="file:///C:/xampp/htdocs/dashboard/Chopsity%20Restaurant%20Ordering%20App/maltina.jfif" alt="Maltina">
+          <p>Maltina</p>
+          <p class="price">₦500</p>
+          Portion: <input type="number" min="1" value="1" id="maltQty">
+          <button onclick="addToCart('Maltina', 500, document.getElementById('maltQty').value)">Add</button>
+        </div>
+      </div>
+    </div>
+    <div class="menu-section">
+      <h2>Ice-cream</h2>
+      <div class="food-grid">
+        <div class="food-item">
+          <img src="file:///C:/xampp/htdocs/dashboard/Chopsity%20Restaurant%20Ordering%20App/Chocolate.jfif" alt="Chocolate Ice-cream">
+          <p>Chocolate Ice-cream big</p>
+          <p class="price">₦500</p>
+          Portion: <input type="number" min="1" value="1" id="chocoQty">
+          <button onclick="addToCart('Chocolate Ice-cream', 500, document.getElementById('chocoQty').value)">Add</button>
+        </div>
+        <div class="food-item">
+          <img src="file:///C:/xampp/htdocs/dashboard/Chopsity%20Restaurant%20Ordering%20App/stawberry.jfif" alt="Strawberry Ice-cream">
+          <p>Strawberry Ice-cream big</p>
+          <p class="price">₦500</p>
+          Portion: <input type="number" min="1" value="1" id="berryQty">
+          <button onclick="addToCart('Strawberry Ice-cream', 500, document.getElementById('berryQty').value)">Add</button>
+        </div>
+        <div class="food-item">
+          <img src="file:///C:/xampp/htdocs/dashboard/Chopsity%20Restaurant%20Ordering%20App/Vanilla.jfif" alt="Vanilla Ice-cream">
+          <p>Vanilla Ice-cream big</p>
+          <p class="price">₦500</p>
+          Portion: <input type="number" min="1" value="1" id="vanQty">
+          <button onclick="addToCart('Vanilla Ice-cream', 500, document.getElementById('vanQty').value)">Add</button>
+        </div>
+        <div class="food-item">
+          <img src="file:///C:/xampp/htdocs/dashboard/Chopsity%20Restaurant%20Ordering%20App/chocolate%202.jfif" alt="Chocolate Ice- cream">
+          <p>Chocolate Ice-cream small</p>
+          <p class="price">₦500</p>
+          Portion: <input type="number" min="1" value="1" id="Choco2Qty">
+          <button onclick="addToCart('Chocolate Ice-cream small', 500, document.getElementById('Choco2Qty').value)">Add</button>
+        </div>
+        <div class="food-item">
+          <img src="file:///C:/xampp/htdocs/dashboard/Chopsity%20Restaurant%20Ordering%20App/stawberry%202.jfif" alt="Strawberry Ice-cream">
+          <p>Strawberry Ice-cream small</p>
+          <p class="price">₦500</p>
+          Portion: <input type="number" min="1" value="1" id="berry2Qty">
+          <button onclick="addToCart('Strawberry Ice-cream small', 500, document.getElementById('berry2Qty').value)">Add</button>
+        </div>
+        <div class="food-item">
+          <img src="file:///C:/xampp/htdocs/dashboard/Chopsity%20Restaurant%20Ordering%20App/vanila%202.jfif" alt="Vanilla Ice-cream">
+          <p>Vanilla Ice-cream small</p>
+          <p class="price">₦500</p>
+          Portion: <input type="number" min="1" value="1" id="van2Qty">
+          <button onclick="addToCart('Vanilla Ice-cream small', 500, document.getElementById('van2Qty').value)">Add</button>
+        </div>
+      </div>
+    </div>
+      </div>
+    </div>
+  </div>
+<!-- Your Cart Section (already exists in your site) -->
+<div id="cart">
+  <h2>🛒 Your Cart</h2>
+  <ul id="cartList"></ul>
+  <p><strong>Total Items:</strong> <span id="totalItems">0</span></p>
+  <p><strong>Total Price:</strong> ₦<span id="totalPrice">0</span></p>
+
+  <div id="checkout">
+    <h3>Checkout</h3>
+    <input type="text" id="custName" placeholder="Full Name" required>
+    <input type="text" id="custAddress" placeholder="Delivery Address" required>
+    <input type="tel" id="custPhone" placeholder="Phone Number" required>
+    <button onclick="payWithPaystack()">Pay with Paystack</button>
+  </div>
+</div>
+
+<!-- Paystack Script -->
+<script src="https://js.paystack.co/v1/inline.js"></script>
+
+<script>
+function payWithPaystack() {
+  const name = document.getElementById("custName").value.trim();
+  const address = document.getElementById("custAddress").value.trim();
+  const phone = document.getElementById("custPhone").value.trim();
+  const amount = parseFloat(document.getElementById("totalPrice").textContent.trim());
+  const cartItems = Array.from(document.querySelectorAll("#cartList li"))
+                        .map(item => item.textContent)
+                        .join(", ");
+
+  if (!name || !address || !phone) {
+    alert("Please fill in your delivery details.");
+    return;
+  }
+
+  if (amount <= 0) {
+    alert("Cart is empty. Add items before checkout.");
+    return;
+  }
+
+  var handler = PaystackPop.setup({
+    key: 'pk_test_7c870c9f35d8fd22392f496ffa0562b96667432c', // Replace with your real public key
+    email: phone + "@customer.com", // Paystack requires email, we fake one from phone
+    amount: amount * 100, // Paystack uses Kobo
+    currency: "NGN",
+    ref: 'PSK-' + Math.floor((Math.random() * 1000000000) + 1),
+    metadata: {
+      custom_fields: [
+        {
+          display_name: "Customer Name",
+          variable_name: "customer_name",
+          value: name
+        },
+        {
+          display_name: "Delivery Address",
+          variable_name: "delivery_address",
+          value: address
+        },
+        {
+          display_name: "Order Details",
+          variable_name: "order_details",
+          value: cartItems
+        }
+      ]
+    },
+    callback: function(response){
+      alert('✅ Payment complete! Reference: ' + response.reference);
+      console.log("Payment successful:", response);
+    },
+    onClose: function(){
+      alert('❌ Payment window closed.');
+    }
+  });
+
+  handler.openIframe();
+}
+</script>
+
+
+
+
+    </div>
+  </div>
+
+
+
+  <!-- Contact Section -->
+  <div id="contact">
+    <h2>📞 Contact Us To Check On Your Delivery</h2>
+    <p>Call us: <a href="tel:+23437907877">+23437907877</a></p>
+    <p>WhatsApp: <a href="https://wa.me/23437907877">Chat with us</a></p>
+    <p>Email: <a href="mailto:chopsityevents@gmail.com">chopsityevents@gmail.com</a></p>
+  </div>
+
+  <script>
+    let cart = [];
+    function addToCart(item, price, qty) {
+      qty = parseInt(qty);
+      if(qty > 0){
+        cart.push({item: item, price: price, qty: qty});
+        updateCart();
+      }
+    }
+    function updateCart() {
+      let cartList = document.getElementById("cartList");
+      cartList.innerHTML = "";
+      let totalItems = 0;
+      let totalPrice = 0;
+      cart.forEach((order) => {
+        let li = document.createElement("li");
+        li.textContent = order.qty + " x " + order.item + " - ₦" + (order.price * order.qty);
+        cartList.appendChild(li);
+        totalItems += order.qty;
+        totalPrice += order.price * order.qty;
+      });
+      document.getElementById("totalItems").textContent = totalItems;
+      document.getElementById("totalPrice").textContent = totalPrice;
+    }
+
+    function checkout(){
+      let name = document.getElementById("custName").value;
+      let address = document.getElementById("custAddress").value;
+      let phone = document.getElementById("custPhone").value;
+      let method = document.getElementById("paymentMethod").value;
+      if(cart.length === 0){
+        alert("Cart is empty! Please add some food.");
+        return;
+      }
+      if(!name || !address || !phone){
+        alert("Please fill all customer details.");
+        return;
+      }
+
+      // SIMULATED PAYMENT (you can connect Paystack/Flutterwave here)
+      alert("Thank you " + name + "! Your order will be delivered to " + address + ". Payment method: " + method + ". Kindly come again!! Thank You👍.");
+    }
+  </script>
+  <script>
+function checkout(){
+  let name = document.getElementById("custName").value;
+  let address = document.getElementById("custAddress").value;
+  let phone = document.getElementById("custPhone").value;
+  let method = document.getElementById("paymentMethod").value;
+  let totalPrice = document.getElementById("totalPrice").textContent;
+
+  let orderItems = cart.map(o => `${o.qty}x ${o.item}`).join(", ");
+
+  if(cart.length === 0){
+    alert("Cart is empty!");
+    return;
+  }
+
+  fetch("save_order.php", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: `name=${encodeURIComponent(name)}&phone=${encodeURIComponent(phone)}&address=${encodeURIComponent(address)}&items=${encodeURIComponent(orderItems)}&payment=${encodeURIComponent(method)}&total=${encodeURIComponent(totalPrice)}`
+  })
+  .then(res => res.text())
+  .then(data => {
+    alert("Order submitted successfully!");
+    cart = [];
+    updateCart();
+  })
+  .catch(err => alert("Error: " + err));
+}
+</script>
+</body>
+</html>
